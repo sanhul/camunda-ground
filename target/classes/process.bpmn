@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0fr9mxs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.11.1">
+  <bpmn:process id="san-timer-process" isExecutable="true">
+    <bpmn:startEvent id="START">
+      <bpmn:outgoing>Flow_0bbh4oj</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:receiveTask id="INITIATE_REQUEST" name="Initiate Request">
+      <bpmn:incoming>Flow_0bbh4oj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1m3bhiy</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:receiveTask id="APPROVE_REQUEST" name="Approve Request">
+      <bpmn:incoming>Flow_1m3bhiy</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z7te78</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:endEvent id="END">
+      <bpmn:incoming>Flow_0z7te78</bpmn:incoming>
+      <bpmn:incoming>Flow_1qvyemj</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_1n3pcfu" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0bbh4oj" sourceRef="START" targetRef="INITIATE_REQUEST" />
+    <bpmn:sequenceFlow id="Flow_1m3bhiy" sourceRef="INITIATE_REQUEST" targetRef="APPROVE_REQUEST" />
+    <bpmn:sequenceFlow id="Flow_0z7te78" sourceRef="APPROVE_REQUEST" targetRef="END" />
+    <bpmn:sequenceFlow id="Flow_1tny7zx" name="&#62;10 S" sourceRef="TIMER_10S" targetRef="CANCEL_REQUEST" />
+    <bpmn:receiveTask id="CANCEL_REQUEST" name="Cancel Request">
+      <bpmn:incoming>Flow_1tny7zx</bpmn:incoming>
+      <bpmn:outgoing>Flow_1qvyemj</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:sequenceFlow id="Flow_1qvyemj" sourceRef="CANCEL_REQUEST" targetRef="END" />
+    <bpmn:boundaryEvent id="TIMER_10S" attachedToRef="INITIATE_REQUEST">
+      <bpmn:outgoing>Flow_1tny7zx</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1j29w2j">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT10S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="san-timer-process">
+      <bpmndi:BPMNEdge id="Flow_1qvyemj_di" bpmnElement="Flow_1qvyemj">
+        <di:waypoint x="510" y="120" />
+        <di:waypoint x="538" y="120" />
+        <di:waypoint x="538" y="240" />
+        <di:waypoint x="565" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1tny7zx_di" bpmnElement="Flow_1tny7zx">
+        <di:waypoint x="303" y="182" />
+        <di:waypoint x="303" y="120" />
+        <di:waypoint x="410" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="303" y="148" width="30" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0z7te78_di" bpmnElement="Flow_0z7te78">
+        <di:waypoint x="503" y="240" />
+        <di:waypoint x="565" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1m3bhiy_di" bpmnElement="Flow_1m3bhiy">
+        <di:waypoint x="343" y="240" />
+        <di:waypoint x="403" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bbh4oj_di" bpmnElement="Flow_0bbh4oj">
+        <di:waypoint x="188" y="240" />
+        <di:waypoint x="243" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0h04lj0_di" bpmnElement="START">
+        <dc:Bounds x="152" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0i12jsh_di" bpmnElement="INITIATE_REQUEST">
+        <dc:Bounds x="243" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hgcgvi_di" bpmnElement="APPROVE_REQUEST">
+        <dc:Bounds x="403" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0h1kiuv_di" bpmnElement="END">
+        <dc:Bounds x="565" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ragd32_di" bpmnElement="CANCEL_REQUEST">
+        <dc:Bounds x="410" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1o9v7sm_di" bpmnElement="TIMER_10S">
+        <dc:Bounds x="285" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
